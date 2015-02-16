@@ -13,19 +13,21 @@ public class Abteilung extends OrgaComponent
 	private EMitarbeiter mitarbeiter; //es müssen mind. 2 + dürfen max. 10 mitarbeiter pro abteilung sein
 	
 	private String name;
+	private OrgaComponent[] oc;
 	private int anzAbteilungen;
 	
-	public Abteilung(String name)
+	public Abteilung(String name, int anzAbteilungen)
 	{
 		this.name=name;
+		this.oc=new OrgaComponent[anzAbteilungen];
 	}
 	
-/*	@Override
-	public String toString()
+	public void addAbteilung(OrgaComponent oc)
 	{
-		return "Abteilung: " + getName() + " untersteht der Abteilung: " + getParent();
-	}*/
-
+		this.oc[anzAbteilungen]=oc;
+		anzAbteilungen++;
+	}
+	
 	@Override
 	void accept(OrgaVisitor ov)
 	{
@@ -37,4 +39,10 @@ public class Abteilung extends OrgaComponent
 	{
 		return this.name;
 	}
+	
+/*	@Override
+	public String toString()
+	{
+		return "Abteilung: " + getName() + " untersteht der Abteilung: " + getParent();
+	}*/
 }
