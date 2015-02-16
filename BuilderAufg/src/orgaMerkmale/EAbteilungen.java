@@ -1,5 +1,6 @@
 package orgaMerkmale;
 
-public enum EAbteilungen {
-
+public enum EAbteilungen
+{
+	TECHNIK, INVESTITIONEN, FAKURA, RECHT, IT, VORSTAND, KUNDENSERVICE, CONTROLLING, INKASSO, RECHNUNGSWESEN;
 }

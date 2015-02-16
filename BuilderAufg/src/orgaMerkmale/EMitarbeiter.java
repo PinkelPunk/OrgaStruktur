@@ -1,0 +1,6 @@
+package orgaMerkmale;
+
+public enum EMitarbeiter
+{
+	GESCHAEFTSFUEHRER, ABTEILUNGSLEITER, MITARBEITER, ADMINISTRATOR, ASSISTENT;
+}
