@@ -13,7 +13,7 @@ public class OrgaVisitor implements IVisitOrga
 	@Override
 	public void visitMitarbeiter(Mitarbeiter m)
 	{
-		System.out.println("Mitarbeiter: " + m.getName());
+		System.out.println("Mitarbeiter: " + m.getmName());
 		
 	}
 	

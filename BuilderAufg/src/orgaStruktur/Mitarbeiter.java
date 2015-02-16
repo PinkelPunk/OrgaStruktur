@@ -2,9 +2,8 @@ package orgaStruktur;
 
 import java.util.HashMap;
 
-public class Mitarbeiter extends Organisation
+public class Mitarbeiter extends OrgaComponent
 {
-	private String name;
 	private String mName;
 	private int mitarbeiterID;
 	private Integer mID;
@@ -12,7 +11,6 @@ public class Mitarbeiter extends Organisation
 	
 	public Mitarbeiter(String mName, int id)
 	{
-		super(mName);
 		this.mID=id;
 		this.mName=mName;
 		
@@ -29,9 +27,22 @@ public class Mitarbeiter extends Organisation
 		return mitarbeiterListe;
 	}
 	
+	/**
+	 * @return the mName
+	 */
+	public String getmName() {
+		return mName;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "Mitarbeiter-ID: " + mitarbeiterID + " , Name: " + mName;
+		return "Mitarbeiter-ID: " + mitarbeiterID + " , Name: " + getmName();
+	}
+
+	@Override
+	void accept(OrgaVisitor ov)
+	{
+		ov.visitMitarbeiter(this);
 	}
 }
