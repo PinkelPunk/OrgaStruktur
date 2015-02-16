@@ -6,7 +6,7 @@ public class OrgaVisitor implements IVisitOrga
 	@Override
 	public void visitAbteilung(Abteilung a)
 	{
-		System.out.println("Abteilung: " + a.getName() + " und Unterabteilungen: ");// + a);
+		System.out.println("Abteilung: " + a.getName() + " und Unterabteilungen: ");// + a.getAbteilungen);
 		
 	}
 
