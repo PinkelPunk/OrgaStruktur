@@ -6,24 +6,21 @@ public class Mitarbeiter extends Abteilung
 {
 	private String name;
 	private Integer mitarbeiterID;
-	private HashMap<Integer, String> mitarbeiterListe=new HashMap<Integer, String>();;
+	private HashMap<Integer, String> mitarbeiterListe=new HashMap<Integer, String>();
 	
 	public Mitarbeiter(String name, Integer id)
 	{
 		this.name=name;
-		if(!id.equals(mitarbeiterListe.get(id)))
+		if(!id.equals(mitarbeiterListe.containsKey(id)))
 		{
 			this.mitarbeiterID=id;
 		}
-		setMitarbeiterListe(this.name, mitarbeiterID);
+		setMitarbeiterListe();
 	}
 	
-	private HashMap<Integer, String> setMitarbeiterListe(String name, Integer id)
+	private HashMap<Integer, String> setMitarbeiterListe()
 	{
-		if(!id.equals(mitarbeiterListe.get(id)))
-		{
-			mitarbeiterListe.put(id, name);
-		}
+		mitarbeiterListe.put(this.mitarbeiterID, this.name);
 		return mitarbeiterListe;
 	}
 	
