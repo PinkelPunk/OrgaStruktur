@@ -2,7 +2,7 @@ package orgaStruktur;
 
 import orgaMerkmale.*;
 
-public class Organisation
+public class Organisation implements IComposite
 {
 	private EAbteilungen abteilung; //jede abteilung muss einen abteilungsleiter haben, es darf aber nur einer pro abteilung sein
 									//jede abteilung ausser die IT darf einen admin haben
