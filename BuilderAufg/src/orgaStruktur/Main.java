@@ -1,3 +1,4 @@
+package orgaStruktur;
 
 public class Main {
 
