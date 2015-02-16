@@ -2,31 +2,36 @@ package orgaStruktur;
 
 import java.util.HashMap;
 
-public class Mitarbeiter extends Abteilung
+public class Mitarbeiter extends Organisation
 {
 	private String name;
-	private Integer mitarbeiterID;
+	private String mName;
+	private int mitarbeiterID;
+	private Integer mID;
 	private HashMap<Integer, String> mitarbeiterListe=new HashMap<Integer, String>();
 	
-	public Mitarbeiter(String name, Integer id)
+	public Mitarbeiter(String mName, int id)
 	{
-		this.name=name;
-		if(!id.equals(mitarbeiterListe.containsKey(id)))
+		super(mName);
+		this.mID=id;
+		this.mName=mName;
+		
+		if(!mID.equals(mitarbeiterListe.containsKey(mitarbeiterID)) && mID<=10)
 		{
-			this.mitarbeiterID=id;
+			this.mitarbeiterID=mID;
 		}
 		setMitarbeiterListe();
 	}
 	
 	private HashMap<Integer, String> setMitarbeiterListe()
 	{
-		mitarbeiterListe.put(this.mitarbeiterID, this.name);
+		mitarbeiterListe.put(this.mitarbeiterID, this.mName);
 		return mitarbeiterListe;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "Mitarbeiter-ID: " + mitarbeiterID + " , Name: " + name;
+		return "Mitarbeiter-ID: " + mitarbeiterID + " , Name: " + mName;
 	}
 }
