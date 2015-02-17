@@ -1,6 +1,6 @@
 package orgaStruktur;
 
-public class OrgaVisitor implements IVisitOrga
+public class AbteilungVisitor implements IVisitAbteilung
 {
 
 	@Override

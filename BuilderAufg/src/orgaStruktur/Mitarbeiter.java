@@ -2,7 +2,7 @@ package orgaStruktur;
 
 import java.util.HashMap;
 
-public class Mitarbeiter extends OrgaComponent
+public class Mitarbeiter extends AbteilungComponent
 {
 	private String mName;
 	private int mitarbeiterID;
@@ -41,7 +41,7 @@ public class Mitarbeiter extends OrgaComponent
 	}
 
 	@Override
-	void accept(OrgaVisitor ov)
+	void accept(AbteilungVisitor ov)
 	{
 		ov.visitMitarbeiter(this);
 	}

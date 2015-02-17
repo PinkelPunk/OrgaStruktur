@@ -1,6 +1,6 @@
 package orgaStruktur;
 
-public interface IVisitOrga
+public interface IVisitAbteilung
 {
 	void visitAbteilung(Abteilung a);
 	void visitMitarbeiter(Mitarbeiter m);

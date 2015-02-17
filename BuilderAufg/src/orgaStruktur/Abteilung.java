@@ -3,7 +3,7 @@ package orgaStruktur;
 import orgaMerkmale.EAbteilungen;
 import orgaMerkmale.EMitarbeiter;
 
-public class Abteilung extends OrgaComponent
+public class Abteilung extends AbteilungComponent
 {
 	private EAbteilungen abteilung; //jede abteilung muss einen abteilungsleiter haben, es darf aber nur einer pro abteilung sein
 	//jede abteilung ausser die IT darf einen admin haben
@@ -13,23 +13,23 @@ public class Abteilung extends OrgaComponent
 	private EMitarbeiter mitarbeiter; //es müssen mind. 2 + dürfen max. 10 mitarbeiter pro abteilung sein
 	
 	private String name;
-	private OrgaComponent[] oc;
+	private AbteilungComponent[] oc;
 	private int anzAbteilungen;
 	
 	public Abteilung(String name, int anzAbteilungen)
 	{
 		this.name=name;
-		this.oc=new OrgaComponent[anzAbteilungen];
+		this.oc=new AbteilungComponent[anzAbteilungen];
 	}
 	
-	public void addAbteilung(OrgaComponent oc)
+	public void addAbteilung(AbteilungComponent oc)
 	{
 		this.oc[anzAbteilungen]=oc;
 		anzAbteilungen++;
 	}
 	
 	@Override
-	void accept(OrgaVisitor ov)
+	void accept(AbteilungVisitor ov)
 	{
 		
 		
