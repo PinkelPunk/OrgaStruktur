@@ -2,6 +2,7 @@ package orgaStruktur;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import orgaMerkmale.*;
 
@@ -18,6 +19,7 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 //	private HashMap<Abteilung<E>, EAbteilungen> abteilungsListe;
 	private ArrayList<Abteilung> unterAbt=new ArrayList<Abteilung>();
 	private ArrayList<Abteilung> oberAbt=new ArrayList<Abteilung>();
+	private ArrayList<EAbteilungen> abtei=new ArrayList<EAbteilungen>();
 	
 	public Abteilung(EAbteilungen abteilung)
 	{
@@ -46,6 +48,7 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 			else
 			{
 				abteil.unterAbt.add(abteil);
+				abteil.abtei.add(abteilung);
 			}
 			
 			//standardwerte
@@ -140,9 +143,19 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 	public String toString()
 	{
 		String ausgabe;
-		String[] untAbt;
 		
-		ausgabe="Abteilung -> " + abteilung + " mit Mitarbeiter -> " + mitarbeiterListe.toString() + "\nAbteilungsListe: -> ";
+		
+		ausgabe="Abteilung -> " + abteilung + " mit Mitarbeiter -> " + mitarbeiterListe.toString();
+		
+		if(unterAbt!=null)
+		{
+			ausgabe+="\nAbteilungsListe: -> ";
+			//Iterator it=unterAbt.iterator();
+			for(Object p : abtei)
+			{
+				ausgabe+= "\t" + abtei.toString() + "\n";
+			}
+		}
 		return ausgabe;
 	}
 

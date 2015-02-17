@@ -7,15 +7,21 @@ public class Main {
 	@SuppressWarnings("unused")
 	public static void main(String[] args)
 	{
+		Abteilung abtFa;
+		Abteilung abtCo;
 		Abteilung abt=new Abteilung.AbteilungBuilder(EAbteilungen.TECHNIK)
 		.mitMitarbeiter(EMitarbeiter.ABTEILUNGSLEITER)
 		.mitMitarbeiter(EMitarbeiter.ADMINISTRATOR)
 		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
-		.inAbteilung(new Abteilung.AbteilungBuilder(EAbteilungen.FAKTURA)
+		.inAbteilung(abtFa=new Abteilung.AbteilungBuilder(EAbteilungen.FAKTURA)
 		.mitMitarbeiter(EMitarbeiter.ABTEILUNGSLEITER)
 		.mitMitarbeiter(EMitarbeiter.ADMINISTRATOR)
 		.mitMitarbeiter(EMitarbeiter.ASSISTENT)
 		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.inAbteilung(abtCo=new Abteilung.AbteilungBuilder(EAbteilungen.CONTROLLING)
+		.mitMitarbeiter(EMitarbeiter.ABTEILUNGSLEITER)
+		.mitMitarbeiter(EMitarbeiter.ASSISTENT)
+		.konfiguriere())
 		.konfiguriere())
 		.konfiguriere();
 		
@@ -47,6 +53,7 @@ public class Main {
 		
 		AbteilungVisitor visit=new AbteilungVisitor();
 		visit.visitAbteilung(abt);
+		visit.visitAbteilung(abtFa);
 	}
 
 }
