@@ -1,6 +1,6 @@
 package orgaStruktur;
 
-public interface IVisitable
+public interface IVisitable<E>
 {
-	abstract void accept(AbteilungVisitor ov);
+	abstract void accept(IVisitable<AbteilungVisitor> ov);
 }

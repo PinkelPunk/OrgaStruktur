@@ -6,13 +6,14 @@ import orgaMerkmale.*;
 
 public class Abteilung extends AbteilungComponent
 {
-	private EAbteilungen abteilung; //jede abteilung muss einen abteilungsleiter haben, es darf aber nur einer pro abteilung sein
-									//jede abteilung ausser die IT darf einen admin haben
-									//jede abteilung darf max. einen assistenten haben
-									//fakura + recht dürfen nur dann einen assistenten haben, wenn sie auch einen admin haben
+	private EAbteilungen abteilung; //jede abteilung muss einen abteilungsleiter haben, es darf aber nur einer pro abteilung sein...funzt in den if-abfragen
+									//jede abteilung ausser die IT darf einen admin haben...funzt in den if-abfragen
+									//jede abteilung darf max. einen assistenten haben...funzt in den if-abfragen
+									//fakura + recht dürfen nur dann einen assistenten haben, wenn sie auch einen admin haben...funzt in den if-abfragen
 
-	private EMitarbeiter mitarbeiter; //es müssen mind. 2 + dürfen max. 10 mitarbeiter pro abteilung sein
+	private EMitarbeiter mitarbeiter; //es müssen mind. 2 + dürfen max. 10 mitarbeiter pro abteilung sein...funzt in den if-abfragen
 	private ArrayList<EMitarbeiter> mitarbeiterListe;
+	private ArrayList<EAbteilungen> abteilungsListe;
 	
 		public Abteilung(EAbteilungen abteilung)
 	{
@@ -20,11 +21,12 @@ public class Abteilung extends AbteilungComponent
 	}
 	
 	@Override
-	public void accept(AbteilungVisitor ov)
+	public void accept(IVisitable<AbteilungVisitor> ov)
 	{
 		
-		
 	}
+
+
 
 	public static class AbteilungBuilder
 	{
@@ -62,9 +64,20 @@ public class Abteilung extends AbteilungComponent
 				throw new IllegalStateException("Es muss einen Abteilungsleiter geben!");
 			}
 			
-			if(abteil.mitarbeiterListe.contains(EMitarbeiter.ABTEILUNGSLEITER)&&abteil.mitarbeiter.equals(EMitarbeiter.ABTEILUNGSLEITER))
+			if(abteil.mitarbeiter.equals(EMitarbeiter.ABTEILUNGSLEITER))
 			{
-				throw new IllegalStateException("Jede Abteilung darf nur einen abteilungsleiter haben.");
+				int anzLeiter=0;
+				for(int i=0; i<abteil.mitarbeiterListe.size(); i++)
+				{
+					if(abteil.mitarbeiterListe.get(i).equals(EMitarbeiter.ABTEILUNGSLEITER))
+					{
+						anzLeiter++;
+					}
+				}
+				if(anzLeiter>1)
+				{
+					throw new IllegalStateException("Jede Abteilung darf nur einen abteilungsleiter haben.");
+				}
 			}
 			
 			if(abteil.mitarbeiter.equals(EMitarbeiter.ASSISTENT))
@@ -94,6 +107,7 @@ public class Abteilung extends AbteilungComponent
 			{
 				throw new IllegalStateException("Die Abteilung IT darf keinen Administrator haben.");
 			}
+			
 			if((abteil.mitarbeiterListe.size()<2)||(abteil.mitarbeiterListe.size()>10))
 			{
 				if((abteil.mitarbeiterListe.size()<2))
@@ -117,4 +131,5 @@ public class Abteilung extends AbteilungComponent
 		ausgabe="Abteilung -> " + abteilung + " mit Mitarbeiter -> " + mitarbeiterListe.toString();
 		return ausgabe;
 	}
+
 }

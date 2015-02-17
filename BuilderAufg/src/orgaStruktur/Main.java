@@ -9,6 +9,7 @@ public class Main {
 		Abteilung abt=new Abteilung.AbteilungBuilder(EAbteilungen.VORSTAND)
 		.mitMitarbeiter(EMitarbeiter.GESCHAEFTSFUEHRER)
 		.mitMitarbeiter(EMitarbeiter.ABTEILUNGSLEITER)
+		.mitMitarbeiter(EMitarbeiter.ADMINISTRATOR)
 		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
 		.konfiguriere();
 		
@@ -21,6 +22,21 @@ public class Main {
 		.konfiguriere();
 		
 		System.out.println(abtIT);
+		
+		Abteilung abtF=new Abteilung.AbteilungBuilder(EAbteilungen.FAKURA)
+		.mitMitarbeiter(EMitarbeiter.ABTEILUNGSLEITER)
+		.mitMitarbeiter(EMitarbeiter.ADMINISTRATOR)
+		.mitMitarbeiter(EMitarbeiter.ASSISTENT)
+		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.konfiguriere();
+		
+		System.out.println(abtF);
 		
 	}
 
