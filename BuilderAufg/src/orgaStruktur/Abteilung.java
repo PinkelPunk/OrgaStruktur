@@ -1,8 +1,5 @@
 package orgaStruktur;
 
-import orgaMerkmale.EAbteilungen;
-import orgaMerkmale.EMitarbeiter;
-
 public class Abteilung extends AbteilungComponent
 {
 	private String name;
@@ -22,7 +19,7 @@ public class Abteilung extends AbteilungComponent
 	}
 	
 	@Override
-	void accept(AbteilungVisitor ov)
+	public void accept(AbteilungVisitor ov)
 	{
 		
 		
@@ -33,9 +30,9 @@ public class Abteilung extends AbteilungComponent
 		return this.name;
 	}
 	
-/*	@Override
+	@Override
 	public String toString()
 	{
-		return "Abteilung: " + getName() + " untersteht der Abteilung: " + getParent();
-	}*/
+		return "Abteilung: " + getName();
+	}
 }

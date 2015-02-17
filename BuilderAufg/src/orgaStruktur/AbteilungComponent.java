@@ -1,9 +1,12 @@
 package orgaStruktur;
 
-public abstract class AbteilungComponent
+public abstract class AbteilungComponent implements IVisitable
 {
 	Object abteilung;
 	String name;
-	abstract void accept(AbteilungVisitor ov);
+	public void accept(AbteilungVisitor ov)
+	{
+		
+	}
 
 }
