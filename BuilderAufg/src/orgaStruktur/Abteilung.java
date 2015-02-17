@@ -1,10 +1,11 @@
 package orgaStruktur;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import orgaMerkmale.*;
 
-public class Abteilung extends AbteilungComponent
+public class Abteilung implements IVisitable<AbteilungVisitor>
 {
 	private EAbteilungen abteilung; //jede abteilung muss einen abteilungsleiter haben, es darf aber nur einer pro abteilung sein...funzt in den if-abfragen
 									//jede abteilung ausser die IT darf einen admin haben...funzt in den if-abfragen
@@ -13,9 +14,11 @@ public class Abteilung extends AbteilungComponent
 
 	private EMitarbeiter mitarbeiter; //es müssen mind. 2 + dürfen max. 10 mitarbeiter pro abteilung sein...funzt in den if-abfragen
 	private ArrayList<EMitarbeiter> mitarbeiterListe;
-	private ArrayList<EAbteilungen> abteilungsListe;
+	private HashMap<Abteilung, EAbteilungen> abteilungsListe;
+	private ArrayList<Abteilung> unterAbt=new ArrayList<Abteilung>();
+	private ArrayList<Abteilung> oberAbt=new ArrayList<Abteilung>();
 	
-		public Abteilung(EAbteilungen abteilung)
+	public Abteilung(EAbteilungen abteilung)
 	{
 		this.abteilung=abteilung;
 	}
@@ -25,9 +28,8 @@ public class Abteilung extends AbteilungComponent
 	{
 		
 	}
-
-
-
+	
+	//innere statische klasse für den Builder
 	public static class AbteilungBuilder
 	{
 		private Abteilung abteil;
@@ -36,7 +38,17 @@ public class Abteilung extends AbteilungComponent
 		{
 			abteil=new Abteilung(abteilung);
 			
+			if(abteil.oberAbt==null)
+			{
+				abteil.oberAbt.add(abteil);
+			}
+			else
+			{
+				abteil.unterAbt.add(abteil);
+			}
+			
 			//standardwerte
+			abteil.abteilungsListe=new HashMap<Abteilung, EAbteilungen>();
 			abteil.mitarbeiterListe=new ArrayList<EMitarbeiter>();
 		}
 		
@@ -46,9 +58,9 @@ public class Abteilung extends AbteilungComponent
 			return this;
 		}
 		
-		public AbteilungBuilder inAbteilung(EAbteilungen abteilung)
+		public AbteilungBuilder inAbteilung(Abteilung abteilung, EAbteilungen abt)
 		{
-			abteil.abteilung=abteilung;
+			abteil.abteilungsListe.put(abteilung, abteil.abteilung=abt);
 			return this;
 		}
 		
@@ -128,7 +140,7 @@ public class Abteilung extends AbteilungComponent
 	public String toString()
 	{
 		String ausgabe;
-		ausgabe="Abteilung -> " + abteilung + " mit Mitarbeiter -> " + mitarbeiterListe.toString();
+		ausgabe="Abteilung -> " + abteilung + " mit Mitarbeiter -> " + mitarbeiterListe.toString() + "\nAbteilungsListe: -> ";// + unterAbt.toString();
 		return ausgabe;
 	}
 
