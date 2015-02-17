@@ -10,11 +10,4 @@ public class AbteilungVisitor implements IVisitAbteilung
 		
 	}
 
-	@Override
-	public void visitMitarbeiter(Mitarbeiter m)
-	{
-		System.out.println("Mitarbeiter: " + m.getmName());
-		
-	}
-	
 }
