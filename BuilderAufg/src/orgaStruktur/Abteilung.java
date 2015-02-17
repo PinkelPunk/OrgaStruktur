@@ -26,12 +26,6 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 		this.abteilung=abteilung;
 	}
 	
-	@Override
-	public void accept(IVisitable<AbteilungVisitor> ov)
-	{
-		ov.accept(this);
-	}
-	
 	//innere statische klasse für den Builder
 	public static class AbteilungBuilder
 	{
@@ -41,16 +35,8 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 		{
 			abteil=new Abteilung(abteilung);
 			
-			if(abteil.oberAbt==null)
-			{
-				abteil.oberAbt.add(abteil);
-			}
-			else
-			{
-				abteil.unterAbt.add(abteil);
-				abteil.abtei.add(abteilung);
-			}
-			
+			abteil.unterAbt.add(abteil);
+			abteil.abtei.add(abteilung);
 			//standardwerte
 			abteil.mitarbeiterListe=new ArrayList<EMitarbeiter>();
 		}
@@ -140,20 +126,24 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 	}
 	
 	@Override
+	public void accept(AbteilungVisitor vi)
+	{
+		vi.visitAbteilung(this);
+	}
+	
+	@Override
 	public String toString()
 	{
 		String ausgabe;
-		
-		
 		ausgabe="Abteilung -> " + abteilung + " mit Mitarbeiter -> " + mitarbeiterListe.toString();
 		
-		if(unterAbt!=null)
+		if(!unterAbt.isEmpty())
 		{
-			ausgabe+="\nAbteilungsListe: -> ";
-			//Iterator it=unterAbt.iterator();
-			for(Object p : abtei)
+			ausgabe+= "\nAbteilungsliste: -> \t";
+			Iterator<EAbteilungen> it=abtei.iterator();
+			while(it.hasNext())
 			{
-				ausgabe+= "\t" + abtei.toString() + "\n";
+				ausgabe+=it.next();
 			}
 		}
 		return ausgabe;
