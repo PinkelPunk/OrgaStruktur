@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import orgaMerkmale.*;
 
+@SuppressWarnings("unused")
 public class Abteilung implements IVisitable<AbteilungVisitor>
 {
 	private EAbteilungen abteilung; //jede abteilung muss einen abteilungsleiter haben, es darf aber nur einer pro abteilung sein...funzt in den if-abfragen
@@ -14,7 +15,7 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 
 	private EMitarbeiter mitarbeiter; //es müssen mind. 2 + dürfen max. 10 mitarbeiter pro abteilung sein...funzt in den if-abfragen
 	private ArrayList<EMitarbeiter> mitarbeiterListe;
-	private HashMap<Abteilung, EAbteilungen> abteilungsListe;
+//	private HashMap<Abteilung<E>, EAbteilungen> abteilungsListe;
 	private ArrayList<Abteilung> unterAbt=new ArrayList<Abteilung>();
 	private ArrayList<Abteilung> oberAbt=new ArrayList<Abteilung>();
 	
@@ -26,7 +27,7 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 	@Override
 	public void accept(IVisitable<AbteilungVisitor> ov)
 	{
-		
+		ov.accept(this);
 	}
 	
 	//innere statische klasse für den Builder
@@ -48,7 +49,6 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 			}
 			
 			//standardwerte
-			abteil.abteilungsListe=new HashMap<Abteilung, EAbteilungen>();
 			abteil.mitarbeiterListe=new ArrayList<EMitarbeiter>();
 		}
 		
@@ -58,9 +58,9 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 			return this;
 		}
 		
-		public AbteilungBuilder inAbteilung(Abteilung abteilung, EAbteilungen abt)
+		public AbteilungBuilder inAbteilung(Abteilung abt)
 		{
-			abteil.abteilungsListe.put(abteilung, abteil.abteilung=abt);
+			abteil.unterAbt.add(abt);
 			return this;
 		}
 		
@@ -108,7 +108,7 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 				}
 			}
 			
-			if(((abteil.abteilung.equals(EAbteilungen.FAKURA))&&(!abteil.mitarbeiterListe.contains(EMitarbeiter.ADMINISTRATOR))&&
+			if(((abteil.abteilung.equals(EAbteilungen.FAKTURA))&&(!abteil.mitarbeiterListe.contains(EMitarbeiter.ADMINISTRATOR))&&
 					(abteil.mitarbeiter.equals(EMitarbeiter.ASSISTENT)))||((abteil.abteilung.equals(EAbteilungen.RECHT))&&
 					(!abteil.mitarbeiterListe.contains(EMitarbeiter.ADMINISTRATOR))&&(abteil.mitarbeiter.equals(EMitarbeiter.ASSISTENT))))
 			{
@@ -140,7 +140,9 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 	public String toString()
 	{
 		String ausgabe;
-		ausgabe="Abteilung -> " + abteilung + " mit Mitarbeiter -> " + mitarbeiterListe.toString() + "\nAbteilungsListe: -> ";// + unterAbt.toString();
+		String[] untAbt;
+		
+		ausgabe="Abteilung -> " + abteilung + " mit Mitarbeiter -> " + mitarbeiterListe.toString() + "\nAbteilungsListe: -> ";
 		return ausgabe;
 	}
 

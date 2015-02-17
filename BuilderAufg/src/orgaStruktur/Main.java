@@ -4,18 +4,24 @@ import orgaMerkmale.*;
 
 public class Main {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args)
 	{
 		Abteilung abt=new Abteilung.AbteilungBuilder(EAbteilungen.TECHNIK)
 		.mitMitarbeiter(EMitarbeiter.ABTEILUNGSLEITER)
 		.mitMitarbeiter(EMitarbeiter.ADMINISTRATOR)
 		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.inAbteilung(new Abteilung.AbteilungBuilder(EAbteilungen.FAKTURA)
+		.mitMitarbeiter(EMitarbeiter.ABTEILUNGSLEITER)
+		.mitMitarbeiter(EMitarbeiter.ADMINISTRATOR)
+		.mitMitarbeiter(EMitarbeiter.ASSISTENT)
+		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
+		.konfiguriere())
 		.konfiguriere();
 		
 		System.out.println(abt);
 		
 		Abteilung abtIT=new Abteilung.AbteilungBuilder(EAbteilungen.IT)
-		.inAbteilung(abt, EAbteilungen.IT)
 		.mitMitarbeiter(EMitarbeiter.ABTEILUNGSLEITER)
 		.mitMitarbeiter(EMitarbeiter.ASSISTENT)
 		.mitMitarbeiter(EMitarbeiter.MITARBEITER)
@@ -23,8 +29,7 @@ public class Main {
 		
 		System.out.println(abtIT);
 		
-		Abteilung abtF=new Abteilung.AbteilungBuilder(EAbteilungen.FAKURA)
-		.inAbteilung(abt, EAbteilungen.FAKURA)
+		Abteilung abtF=new Abteilung.AbteilungBuilder(EAbteilungen.FAKTURA)
 		.mitMitarbeiter(EMitarbeiter.ABTEILUNGSLEITER)
 		.mitMitarbeiter(EMitarbeiter.ADMINISTRATOR)
 		.mitMitarbeiter(EMitarbeiter.ASSISTENT)
@@ -38,8 +43,10 @@ public class Main {
 		.konfiguriere();
 		
 		System.out.println(abtF);
+		System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------");
 		
-		
+		AbteilungVisitor visit=new AbteilungVisitor();
+		visit.visitAbteilung(abt);
 	}
 
 }
