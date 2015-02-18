@@ -17,41 +17,54 @@ public class Abteilung extends OrgaElem
 	private EMitarbeiter mitarbeiter; //es müssen mind. 2 + dürfen max. 10 mitarbeiter pro abteilung sein...funzt in den if-abfragen
 	private ArrayList<EMitarbeiter> mitarbeiterListe;
 //	private HashMap<Abteilung<E>, EAbteilungen> abteilungsListe;
-	private ArrayList<Abteilung> unterAbt=new ArrayList<Abteilung>();
-	private ArrayList<Abteilung> oberAbt=new ArrayList<Abteilung>();
-	private ArrayList<EAbteilungen> abtei=new ArrayList<EAbteilungen>();
+	private ArrayList<OrgaElem> unterAbt;
 	private ArrayList<Mitarbeiter> arbeiter;
+	//private ArrayList<Abteilung> oberAbt;
+	//private ArrayList<EAbteilungen> abtei;
 	private boolean hasAdmin;
 	private boolean hasAssi;
 	private boolean hasAbtLeiter;
 	
-	public Abteilung(EAbteilungen abteilung)
+	private Abteilung(OrgaElem parent, EAbteilungen abt)
 	{
-		this.abteilung=abteilung;
+		abteilung=abt;
+		arbeiter=new ArrayList<Mitarbeiter>();
+		unterAbt=new ArrayList<OrgaElem>();
+		setParent(parent);
 	}
 	
+	/**
+	 * @return the unterAbt
+	 */
+	public ArrayList<OrgaElem> getUnterAbt() {
+		return unterAbt;
+	}
+
 	//innere statische klasse für den Builder
 	public static class AbteilungBuilder
 	{
 		private Abteilung abteil;
 		
-		public AbteilungBuilder(EAbteilungen abteilung)
+		public AbteilungBuilder(OrgaElem o, EAbteilungen abt)
 		{
-			abteil=new Abteilung(abteilung);
-			
+			abteil=new Abteilung(o, abt);
 			abteil.unterAbt.add(abteil);
-			abteil.abtei.add(abteilung);
+			abteil.abteilung=abt;
 			//standardwerte
 			abteil.mitarbeiterListe=new ArrayList<EMitarbeiter>();
 		}
 		
 		public AbteilungBuilder mitMitarbeiter(EMitarbeiter mitarbeiter)
 		{
-			abteil.mitarbeiterListe.add(abteil.mitarbeiter=mitarbeiter);
+			if(!mitarbeiter.equals(EMitarbeiter.ABTEILUNGSLEITER))
+			{
+				if()
+				abteil.mitarbeiterListe.add(abteil.mitarbeiter=mitarbeiter);
+			}
 			return this;
 		}
 		
-		public AbteilungBuilder inAbteilung(Abteilung abt)
+		public AbteilungBuilder mitUnterabteilung(OrgaElem abt)
 		{
 			abteil.unterAbt.add(abt);
 			return this;
@@ -59,6 +72,25 @@ public class Abteilung extends OrgaElem
 		
 		public Abteilung konfiguriere()
 		{
+			if(abteil.abteilung==null)
+			{
+				throw new IllegalStateException("Abteilungen müssen einen namen haben!");
+			}
+			
+			if(abteil.getParent()==null)
+			{
+				Iterator<Mitarbeiter> it=abteil.arbeiter.iterator();
+				Mitarbeiter temp=null;
+				while(it.hasNext())
+				{
+					temp=it.next();
+					if(temp.isAbtLeiter())
+					{
+						temp.setFuehrer(true);;
+					}
+				}
+			}
+			
 			if(abteil.mitarbeiterListe.isEmpty())
 			{
 				throw new NullPointerException("Es darf keine Abteilung ohne Mitarbeiter geben!");
@@ -144,7 +176,7 @@ public class Abteilung extends OrgaElem
 		if(!unterAbt.isEmpty())
 		{
 			ausgabe+= "\nAbteilungsliste: -> \t";
-			Iterator<EAbteilungen> it=abtei.iterator();
+			Iterator<OrgaElem> it=unterAbt.iterator();
 			while(it.hasNext())
 			{
 				ausgabe+=it.next();
