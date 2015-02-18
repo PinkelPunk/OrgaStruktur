@@ -58,7 +58,6 @@ public class Abteilung extends OrgaElem
 		{
 			if(!mitarbeiter.equals(EMitarbeiter.ABTEILUNGSLEITER))
 			{
-				if()
 				abteil.mitarbeiterListe.add(abteil.mitarbeiter=mitarbeiter);
 			}
 			return this;
