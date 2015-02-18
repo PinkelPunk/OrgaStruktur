@@ -7,7 +7,7 @@ import java.util.Iterator;
 import orgaMerkmale.*;
 
 @SuppressWarnings("unused")
-public class Abteilung implements IVisitable<AbteilungVisitor>
+public class Abteilung extends OrgaElem
 {
 	private EAbteilungen abteilung; //jede abteilung muss einen abteilungsleiter haben, es darf aber nur einer pro abteilung sein...funzt in den if-abfragen
 									//jede abteilung ausser die IT darf einen admin haben...funzt in den if-abfragen
@@ -20,6 +20,10 @@ public class Abteilung implements IVisitable<AbteilungVisitor>
 	private ArrayList<Abteilung> unterAbt=new ArrayList<Abteilung>();
 	private ArrayList<Abteilung> oberAbt=new ArrayList<Abteilung>();
 	private ArrayList<EAbteilungen> abtei=new ArrayList<EAbteilungen>();
+	private ArrayList<Mitarbeiter> arbeiter;
+	private boolean hasAdmin;
+	private boolean hasAssi;
+	private boolean hasAbtLeiter;
 	
 	public Abteilung(EAbteilungen abteilung)
 	{
