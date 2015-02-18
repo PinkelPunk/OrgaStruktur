@@ -18,9 +18,9 @@ public class Abteilung extends OrgaElem
 	private ArrayList<EMitarbeiter> mitarbeiterListe;
 //	private HashMap<Abteilung<E>, EAbteilungen> abteilungsListe;
 	private ArrayList<OrgaElem> unterAbt;
-	private ArrayList<Mitarbeiter> arbeiter;
+	//private ArrayList<Mitarbeiter> arbeiter;
 	//private ArrayList<Abteilung> oberAbt;
-	//private ArrayList<EAbteilungen> abtei;
+	private ArrayList<EAbteilungen> abtei=new ArrayList<EAbteilungen>();
 	private boolean hasAdmin;
 	private boolean hasAssi;
 	private boolean hasAbtLeiter;
@@ -28,7 +28,6 @@ public class Abteilung extends OrgaElem
 	private Abteilung(OrgaElem parent, EAbteilungen abt)
 	{
 		abteilung=abt;
-		arbeiter=new ArrayList<Mitarbeiter>();
 		unterAbt=new ArrayList<OrgaElem>();
 		setParent(parent);
 	}
@@ -50,22 +49,22 @@ public class Abteilung extends OrgaElem
 			abteil=new Abteilung(o, abt);
 			abteil.unterAbt.add(abteil);
 			abteil.abteilung=abt;
+			abteil.abtei.add(abt);
 			//standardwerte
 			abteil.mitarbeiterListe=new ArrayList<EMitarbeiter>();
 		}
 		
 		public AbteilungBuilder mitMitarbeiter(EMitarbeiter mitarbeiter)
 		{
-			if(!mitarbeiter.equals(EMitarbeiter.ABTEILUNGSLEITER))
-			{
-				abteil.mitarbeiterListe.add(abteil.mitarbeiter=mitarbeiter);
-			}
+			abteil.mitarbeiterListe.add(abteil.mitarbeiter=mitarbeiter);
+			
 			return this;
 		}
 		
 		public AbteilungBuilder mitUnterabteilung(OrgaElem abt)
 		{
 			abteil.unterAbt.add(abt);
+			abteil.abtei.add(abteil.abteilung);
 			return this;
 		}
 		
@@ -78,15 +77,15 @@ public class Abteilung extends OrgaElem
 			
 			if(abteil.getParent()==null)
 			{
-				Iterator<Mitarbeiter> it=abteil.arbeiter.iterator();
-				Mitarbeiter temp=null;
+				Iterator<EMitarbeiter> it=abteil.mitarbeiterListe.iterator();
+				EMitarbeiter temp=null;
 				while(it.hasNext())
 				{
 					temp=it.next();
-					if(temp.isAbtLeiter())
+					/*if(temp.isAbtLeiter())
 					{
 						temp.setFuehrer(true);;
-					}
+					}*/
 				}
 			}
 			
@@ -164,6 +163,10 @@ public class Abteilung extends OrgaElem
 	public void accept(AbteilungVisitor vi)
 	{
 		vi.visitAbteilung(this);
+		for(Object o:unterAbt)
+		{
+			((Abteilung) o).accept(vi);//ClassCastException
+		}
 	}
 	
 	@Override
@@ -175,7 +178,7 @@ public class Abteilung extends OrgaElem
 		if(!unterAbt.isEmpty())
 		{
 			ausgabe+= "\nAbteilungsliste: -> \t";
-			Iterator<OrgaElem> it=unterAbt.iterator();
+			Iterator<EAbteilungen> it=abtei.iterator();
 			while(it.hasNext())
 			{
 				ausgabe+=it.next();
